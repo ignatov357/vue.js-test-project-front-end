@@ -12,11 +12,8 @@ export default {
                     return;
                 }
 
-                if (typeof this.submitHandler === 'function') {
-                    this.submitHandler(this._data);
-                }
+                this.submitHandler(this.$data);
             });
-            return false;
         }
     },
     provide() {

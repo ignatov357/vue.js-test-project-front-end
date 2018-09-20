@@ -8,7 +8,7 @@
                 </div>
                 <div class="col-md-6">
                     <ValidateInput v-model="password" validate="required" name="password" placeholder="Password *" type="password"></ValidateInput>
-                    <input class="btnSubmit" type="submit" value="Login">
+                    <input class="btn-submit" type="submit" value="Login">
                 </div>
             </div>
         </form>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-    import form from '../mixins/form';
     import ValidateInput from "./ValidateInput";
+    import form from '@/mixins/form';
 
     export default {
         name: 'SignIn',

@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-if="$store.state.loaded">
         <vue-snotify></vue-snotify>
         <router-view class="view"></router-view>
     </div>

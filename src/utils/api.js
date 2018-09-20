@@ -1,7 +1,13 @@
 import axios from 'axios';
+const config = {
+    apiUrl: '/api/v1/',
+    apiMethodUrl(method) {
+        return this.apiUrl + method;
+    }
+};
 
-var register = (data, callback) => {
-    axios.post('/api/v1/register', data)
+const handlePromise = (promise, callback) => {
+    promise
         .then((response) => {
             callback(null, response);
         })
@@ -9,45 +15,23 @@ var register = (data, callback) => {
             callback(error, null);
         });
 };
-var login = (data, callback) => {
-    axios.post('/api/v1/login', data)
-        .then((response) => {
-            callback(null, response);
-        })
-        .catch((error) => {
-            callback(error, null);
-        });
+
+const register = (data, callback) => {
+    handlePromise(axios.post(config.apiMethodUrl('register'), data), callback);
 };
-var refreshUserData = (beforeRouterCallback = () => {}) => {
-    axios.get('/api/v1/user_data')
-        .then((response) => {
-            if (response.status == 200) {
-                user = response.data;
-                beforeRouterCallback();
-                router.replace('/dashboard');
-            } else {
-                beforeRouterCallback();
-                router.replace('/authorization');
-            }
-        })
-        .catch((error) => {
-            beforeRouterCallback();
-            router.replace('/authorization');
-        });
+const login = (data, callback) => {
+    handlePromise(axios.post(config.apiMethodUrl('login'), data), callback);
 };
-var logout = (callback) => {
-    axios.post('/api/v1/logout')
-        .then((response) => {
-            callback(null, response);
-        })
-        .catch((error) => {
-            callback(error, null);
-        });
+const getUserData = function(callback) {
+    handlePromise(axios.get(config.apiMethodUrl('user_data')), callback);
+};
+const logout = (callback) => {
+    handlePromise(axios.post(config.apiMethodUrl('logout')), callback);
 };
 
 export default {
     register,
     login,
-    refreshUserData,
+    getUserData,
     logout
 };

@@ -10,33 +10,21 @@
 </template>
 
 <script>
-    import api from "../utils/api";
+    import api from "@/utils/api";
+    import utils from "@/utils/utils";
 
     export default {
         name: "DashboardPage",
-        data: () => {
+        data() {
             return {
-                user
+                user: this.$store.state.userData
             }
         },
         methods: {
             logoutHandler() {
-                api.logout(function(error, response) {
-                    if(!error) {
-                        if (response.status === 200) {
-                            this.$snotify.success(response.data.message);
-                            this.$router.replace('/authorization');
-                        } else {
-                            this.$snotify.error(response.data.errorMessage);
-                        }
-                    } else {
-                        if (typeof error.response !== 'undefined') {
-                            this.$snotify.error(error.response.data.errorMessage);
-                        } else {
-                            this.$snotify.error('Problem connecting to the server');
-                        }
-                    }
-                }.bind(this));
+                api.logout(utils.handleApiCallResponse.bind(null, this, (componentReference) => {
+                    componentReference.$router.replace('/authorization');
+                }));
             }
         }
     }

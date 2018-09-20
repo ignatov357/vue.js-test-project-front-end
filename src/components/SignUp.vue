@@ -12,7 +12,7 @@
                     <ValidateInput v-model="username" validate="required|min:4" name="username" placeholder="Username *"></ValidateInput>
                     <ValidateInput v-model="phone" validate="required" name="phone" placeholder="Your Phone *"></ValidateInput>
                     <ValidateInput v-model="passwordConfirmation" :validate="{required: true, is: password}" name="password confirmation" placeholder="Confirm Password *" type="password"></ValidateInput>
-                    <input class="btnSubmit" type="submit" value="Sign up">
+                    <input class="btn-submit" type="submit" value="Sign up">
                 </div>
             </div>
         </form>
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import form from "../mixins/form";
     import ValidateInput from "./ValidateInput";
+    import form from "@/mixins/form";
 
     export default {
         name: 'SignUp',

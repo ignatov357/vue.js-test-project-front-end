@@ -2,22 +2,23 @@
     <div class="container authorization">
         <div class="row">
             <div class="col-md-3 left">
-                <h3>{{ activeTab == 'register' ? 'Already have an account?' : 'Don\'t have an account yet?' }}</h3>
-                <button @click="changeTab()">{{ activeTab == 'register' ? 'Login' : 'Sign up' }}</button>
+                <h3>{{ activeTab === 'register' ? 'Already have an account?' : 'Don\'t have an account yet?' }}</h3>
+                <button @click="changeTab()">{{ activeTab === 'register' ? 'Login' : 'Sign up' }}</button>
                 <br>
             </div>
             <div class="col-md-9 right">
-                <SignUp v-if="activeTab == 'register'" :submit-handler="registerHandler"></SignUp>
-                <SignIn v-if="activeTab == 'login'" :submit-handler="loginHandler"></SignIn>
+                <SignUp v-if="activeTab === 'register'" :submit-handler="registerHandler"></SignUp>
+                <SignIn v-if="activeTab === 'login'" :submit-handler="loginHandler"></SignIn>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-    import api from '../utils/api';
     import SignIn from './SignIn';
     import SignUp from './SignUp';
+    import api from '@/utils/api';
+    import utils from "@/utils/utils";
 
     export default {
         name: 'AuthorizationPage',
@@ -35,40 +36,14 @@
                 this.activeTab = (this.activeTab === 'register' ? 'login' : 'register');
             },
             registerHandler(data) {
-                api.register(data, function (error, response) {
-                    if (!error) {
-                        if (response.status === 200) {
-                            this.$snotify.success(response.data.message);
-                            api.refreshUserData();
-                        } else {
-                            this.$snotify.error(response.data.errorMessage);
-                        }
-                    } else {
-                        if (typeof error.response !== 'undefined' && typeof error.response.data === 'object') {
-                            this.$snotify.error(error.response.data.errorMessage);
-                        } else {
-                            this.$snotify.error('Problem connecting to the server');
-                        }
-                    }
-                }.bind(this));
+                api.register(data, utils.handleApiCallResponse.bind(null, this, (componentReference) => {
+                    componentReference.$store.dispatch('refreshUserData', componentReference);
+                }));
             },
             loginHandler(data) {
-                api.login(data, function (error, response) {
-                    if (!error) {
-                        if (response.status === 200) {
-                            this.$snotify.success(response.data.message);
-                            api.refreshUserData();
-                        } else {
-                            this.$snotify.error(response.data.errorMessage);
-                        }
-                    } else {
-                        if (typeof error.response !== 'undefined' && typeof error.response.data === 'object') {
-                            this.$snotify.error(error.response.data.errorMessage);
-                        } else {
-                            this.$snotify.error('Problem connecting to the server');
-                        }
-                    }
-                }.bind(this));
+                api.login(data, utils.handleApiCallResponse.bind(null, this, (componentReference) => {
+                    componentReference.$store.dispatch('refreshUserData', componentReference);
+                }));
             }
         }
     }
