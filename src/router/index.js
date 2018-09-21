@@ -17,12 +17,6 @@ export default new VueRouter({
             path: '/dashboard',
             name: 'dashboard',
             component: DashboardPage
-        },
-        {
-            path: '*',
-            redirect: {
-                name: 'authorization'
-            }
         }
     ]
 });
