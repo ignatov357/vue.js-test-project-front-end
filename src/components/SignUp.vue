@@ -20,8 +20,8 @@
 </template>
 
 <script>
-    import ValidateInput from "./ValidateInput";
-    import form from "@/mixins/form";
+    import ValidateInput from "./ValidateInput.vue";
+    import form from "../mixins/form.js";
 
     export default {
         name: 'SignUp',
@@ -44,4 +44,4 @@
     }
 </script>
 
-<style scoped src="@/assets/css/form.css"></style>
+<style scoped src="../assets/css/Form.css"></style>

@@ -15,10 +15,10 @@
 </template>
 
 <script>
-    import SignIn from './SignIn';
-    import SignUp from './SignUp';
-    import api from '@/utils/api';
-    import utils from "@/utils/utils";
+    import SignIn from './SignIn.vue';
+    import SignUp from './SignUp.vue';
+    import api from '../utils/api.js';
+    import utils from "../utils/utils.js";
 
     export default {
         name: 'AuthorizationPage',

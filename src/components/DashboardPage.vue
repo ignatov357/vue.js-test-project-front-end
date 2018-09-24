@@ -10,8 +10,8 @@
 </template>
 
 <script>
-    import api from "@/utils/api";
-    import utils from "@/utils/utils";
+    import api from "../utils/api.js";
+    import utils from "../utils/utils.js";
 
     export default {
         name: "DashboardPage",
